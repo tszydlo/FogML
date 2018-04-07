@@ -1,0 +1,36 @@
+int evaluate_bayes(double* x){
+
+    double sigma[<classes>][<features>] = <sigma>;
+    double theta[<classes>][<features>] = <theta>;
+    double log_sigma[<classes>][<features>] = <log_sigma>;
+
+    double prior[<classes>] = <prior>;
+
+    double n_ij;
+    double temp_sum;
+    double joint_log_likelihood[<classes>];
+
+    for (int i = 0; i < <classes>; i++){
+        temp_sum = 0;
+        for (int j = 0; j < <features>; j++){
+            temp_sum += log_sigma[i][j];
+        }
+        n_ij = -0.5 * temp_sum;
+
+        temp_sum = 0;
+        for (int j = 0; j < <features>; j++){
+            temp_sum += ((x[j] - theta[i][j]) * (x[j] - theta[i][j])) / (sigma[i][j]);
+        }
+        n_ij -= 0.5 * temp_sum;
+        joint_log_likelihood[i] = prior[i] + n_ij;
+    }
+
+    int max_index = 0;
+    for (int i = 0; i < <classes>; i++){
+        printf("%lf\n", joint_log_likelihood[i]);
+        if (joint_log_likelihood[i] > joint_log_likelihood[max_index]){
+            max_index = i;
+        }
+    }
+    return max_index;
+}
