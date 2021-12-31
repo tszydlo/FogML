@@ -11,6 +11,26 @@ The structure of the project is as follows:
 `pip install fogml`
 
 
+## Example
+
+```
+from sklearn import datasets, tree
+
+from fogml.generators import GeneratorFactory
+
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+
+clf = tree.DecisionTreeClassifier(random_state=3456)
+clf.fit(X, y)
+print( 'accuracy: ',clf.score(X,y))
+
+factory = GeneratorFactory()
+generator = factory.get_generator(clf)
+generator.generate()
+```
+
 # FogML research
 
 If you think that the project is interesting to you, please cite the paper:
