@@ -433,21 +433,16 @@ void loop() {
           tft.setCursor(250, 160);
           tft.print(String(result));
 
-
-          /*
-          result = evaluate_bayes(char_buff);
-          tft.setCursor(200, 180);
-          tft.setTextSize(3);
-          tft.print("BAYES");
-          tft.setCursor(250, 240);
-          tft.print(String(result));
-         */
+          //result = evaluate_bayes(char_buff);
+          //tft.setCursor(200, 180);
+          //tft.setTextSize(3);
+          //tft.print("BAYES");
+          //tft.setCursor(250, 240);
+          //tft.print(String(result));
         }
 
         if (ypos>170 && ypos < 200 && xpos<100){
           setup();
         }
-
-        
     }
 }

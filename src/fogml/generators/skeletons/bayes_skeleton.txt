@@ -1,4 +1,4 @@
-int evaluate_bayes(double* x){
+int <cname>(double* x){
 
     double sigma[<classes>][<features>] = <sigma>;
     double theta[<classes>][<features>] = <theta>;

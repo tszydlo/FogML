@@ -1,11 +1,27 @@
+"""
+   Copyright 2021 FogML
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+"""
+
 from sklearn import tree, naive_bayes
-from sklearn.datasets import fetch_mldata
+from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 import numpy as np
 import pickle
 from sklearn.neural_network import MLPClassifier
 
-from generators.generator import GeneratorFactory
+from fogml.generators import GeneratorFactory
 
 X_TEST = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -34,7 +50,7 @@ X_TEST = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 
 factory = GeneratorFactory()
-mnist = fetch_mldata('MNIST original', data_home='.')
+mnist = load_digits()
 x_train, x_test, y_train, y_test = train_test_split(mnist.data, mnist.target, test_size=0.1, random_state=2)
 
 # clf = tree.DecisionTreeClassifier(random_state=3456)
@@ -51,4 +67,3 @@ print("SIZE: " + str(len(dumped)))
 generator.generate()
 
 print(clf.score(x_test, y_test))
-print(clf.predict(np.array(X_TEST).reshape(1, -1)))

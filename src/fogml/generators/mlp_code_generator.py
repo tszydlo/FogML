@@ -1,6 +1,22 @@
-from generators.arduino_generator import ArduinoGenerator
-from generators.base_generator import BaseGenerator
-from generators.utils import generate_c_matrix, generate_c_array, generate_c_function
+"""
+   Copyright 2021 FogML
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+"""
+
+from .arduino_generator import ArduinoGenerator
+from .base_generator import BaseGenerator
+from .utils import generate_c_matrix, generate_c_array, generate_c_function
 
 
 class MlpCodeGenerator(BaseGenerator):
@@ -107,9 +123,11 @@ class MlpCodeGenerator(BaseGenerator):
             result_name="result%d" % layer
         )
 
-    def generate_code_for_arduino(self):
-        code = ArduinoGenerator.get_arduino_header()
-        code += "#include \"neural_nets.h\"\n"
+    def generate_code_for_arduino(self, cname):
+        code = self.license_header()
+
+        code += ArduinoGenerator.get_arduino_header()
+        #code += "#include \"neural_nets.h\"\n"
         for layer in range(self.clf.n_layers_ - 1):
             for col in range(self.clf.coefs_[layer].shape[1]):
                 code += ArduinoGenerator.get_progmem_array(self.clf.coefs_[layer][:, [col]],
@@ -129,9 +147,9 @@ class MlpCodeGenerator(BaseGenerator):
 
         function_body += self.generate_max_index_return(len(self.clf.classes_), vector_name="result1")
         code += generate_c_function(function_body=function_body, return_type="int",
-                                    name="evaluate_network", args="uint8_t * x")
+                                    name=cname, args="uint8_t * x")
         return code
 
-    def generate(self):
-        with open('./models/network_model.c', 'w') as output_file:
-            output_file.write(self.generate_code_for_arduino())
+    def generate(self, fname = 'mlp_model.c', cname="classifier", **kwargs):
+        with open(fname, 'w') as output_file:
+            output_file.write(self.generate_code_for_arduino(cname))
