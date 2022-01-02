@@ -1,0 +1,95 @@
+double sqrt(double number){
+    double error = 0.00001;
+    double s = number;
+
+    while ((s - number / s) > error)
+    {
+        s = (s + number / s) / 2;
+    }
+    return s;
+}
+
+float pow2(int x){
+	return x*x;
+}
+
+struct Point{
+    int idx;    
+    double distance;     
+};
+
+void swap(Point* tab, int i1, int i2)
+{
+  Point temp = tab[i1];
+  tab[i1] = tab[i2];
+  tab[i2] = temp;
+}
+
+void quick_sort(Point *tab, int left, int right){
+    if(right <= left){
+      return;
+    }
+
+    int i = left - 1;
+		int j = right + 1;
+    int pivot = tab[(left+right)/2].distance;
+
+    while(1)
+    {
+        while(pivot>tab[++i].distance);
+        while(pivot<tab[--j].distance);
+        if(i <= j){
+          swap(tab,i,j);
+        }
+        else {
+          break;
+        }
+    }
+    if(j > left){
+      quick_sort(tab, left, j);
+    }
+    if(i < right){
+      quick_sort(tab, i, right);
+    }
+}
+
+int <cname>(double* x){
+	double attributes[<members>][<features>] = <dataset_features>;
+	double member_class[<members>] = <member_class>;
+	
+  int k = <k_neighbours>;
+  Point distance[k] = <distance_empty>; //[null, null, ... k razy]
+  
+	//kod do znalezienia k najbliższych
+	for(int i = 0; i < members; i++){
+  	double res = 0;
+    for(int j = 0; j < features; i++){
+  			res += pow2(x[j] - attrbutes[i][j]);
+  	}
+    res = sqrt(res);
+    struct Point res_dist;
+    res_dist.idx = i;
+    res_dist.distance = res;
+    distance[i] = res_dist;
+  }
+  
+  quick_sort(distance, 0, k-1);
+  
+	//znalezienie najliczniejszej klasy
+	int classCount[<class_count>] = <class_count_empty>; //[0,0,0,...,0]
+  for(int i = 0; i < k; i++){
+    classCount[member_class[distance[i].idx]]++;
+  }
+  
+  int max_count = -1;
+  int idx_max = -1;
+  for(int i = 0; i < k; i++){
+    if(classCount[i] > max_count){
+      idx_max = i;
+      max_count = classCount[i]; 
+    }
+  }
+  
+  return idx_max;
+  
+}
