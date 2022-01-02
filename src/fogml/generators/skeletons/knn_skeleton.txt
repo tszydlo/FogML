@@ -9,7 +9,7 @@ double sqrt(double number){
     return s;
 }
 
-float pow2(int x){
+double pow2(double x){
 	return x*x;
 }
 
@@ -32,7 +32,7 @@ void quick_sort(Point *tab, int left, int right){
 
     int i = left - 1;
 		int j = right + 1;
-    int pivot = tab[(left+right)/2].distance;
+    double pivot = tab[(left+right)/2].distance;
 
     while(1)
     {
@@ -58,12 +58,12 @@ int <cname>(double* x){
 	int member_class[<members>] = <member_class>;
 	
   int k = <k_neighbours>;
-  Point distance[k];
+  Point distance[<members>];
   
 	//kod do znalezienia k najbliższych
 	for(int i = 0; i < <members>; i++){
   	double res = 0;
-    for(int j = 0; j < <features>; i++){
+    for(int j = 0; j < <features>; j++){
   			res += pow2(x[j] - attributes[i][j]);
   	}
     res = sqrt(res);

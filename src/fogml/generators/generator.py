@@ -37,7 +37,6 @@ class GeneratorFactory:
     }
 
     def get_generator(self, clf):
-        print("dupa")
         if clf.__class__ in self.recognized_classifiers.keys():
             return self.recognized_classifiers[clf.__class__](clf)
         else:

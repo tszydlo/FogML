@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-
+#include <stdlib.h>
 #include <stdio.h>
 
 double sqrt(double number){
@@ -27,7 +27,7 @@ double sqrt(double number){
     return s;
 }
 
-float pow2(int x){
+double pow2(double x){
 	return x*x;
 }
 
@@ -50,7 +50,7 @@ void quick_sort(Point *tab, int left, int right){
 
     int i = left - 1;
 		int j = right + 1;
-    int pivot = tab[(left+right)/2].distance;
+    double pivot = tab[(left+right)/2].distance;
 
     while(1)
     {
@@ -226,20 +226,22 @@ int classifier(double* x){
 };
 	int member_class[150] = {0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, };
 	
-  int k = 5;
-  Point distance[k];
+  int k = 6;
+  Point distance[150];
   
 	//kod do znalezienia k najbliższych
 	for(int i = 0; i < 150; i++){
   	double res = 0;
-    for(int j = 0; j < 4; i++){
+    for(int j = 0; j < 4; j++){
   			res += pow2(x[j] - attributes[i][j]);
   	}
     res = sqrt(res);
+    printf("%f \n", res);
     Point res_dist;
     res_dist.idx = i;
     res_dist.distance = res;
     distance[i] = res_dist;
+    printf("%d finished\n", i);
   }
   
   quick_sort(distance, 0, k-1);
@@ -247,8 +249,10 @@ int classifier(double* x){
 	//znalezienie najliczniejszej klasy
     int class_count[3] = {0.000000, 0.000000, 0.000000, }; //[0,0,0,...,0]
   for(int i = 0; i < k; i++){
+    printf("%f %d %d\n", distance[i].distance, distance[i].idx, member_class[distance[i].idx]);
     class_count[member_class[distance[i].idx]]++;
   }
+  printf("\n");
   
   int max_count = -1;
   int idx_max = -1;
@@ -258,12 +262,27 @@ int classifier(double* x){
       max_count = class_count[i];
     }
   }
-  
+
+  printf("%d\n", max_count);
+  printf("%d\n", idx_max);
+
+  for(int i = 0; i < k; i++){
+    printf("%d ", class_count[i]);
+  }
+  printf("\n");
+
   return idx_max;
   
 }
 
 int main(){
-    double x[4] = {1.0,1.0,1.0,1.0};
+    double x[4] = {5.9, 3.0, 4.2, 1.5, };
+
+
+    printf("%f\n", x[0]);
+    printf("%f\n", x[1]);
+    printf("%f\n", x[2]);
+    printf("%f\n", x[3]);
+
     printf("%d\n", classifier(x));
 }
