@@ -15,11 +15,15 @@
 """
 
 import pickle
+import sys
 
 from sklearn import datasets, tree, naive_bayes
 from sklearn.neural_network import MLPClassifier
+from sklearn.neighbors import KNeighborsClassifier
 
-from fogml.generators import GeneratorFactory
+sys.path.append("../../src/fogml/")
+
+from generators import GeneratorFactory
 
 factory = GeneratorFactory()
 
@@ -27,16 +31,21 @@ iris = datasets.load_iris()
 X = iris.data
 y = iris.target
 
-#clf = tree.DecisionTreeClassifier(random_state=3456)
-#clf = naive_bayes.GaussianNB()
-clf = MLPClassifier(hidden_layer_sizes=(4,), random_state=34, solver='adam', max_iter=1500)
-#clf = RandomForestClassifier(n_estimators=10)
+# clf = tree.DecisionTreeClassifier(random_state=3456)
+# clf = naive_bayes.GaussianNB()
+# clf = MLPClassifier(
+#     hidden_layer_sizes=(4,), random_state=34, solver="adam", max_iter=1500
+# )
+# clf = RandomForestClassifier(n_estimators=10)
+clf = KNeighborsClassifier(
+    n_neighbors=5, weights="uniform", algorithm="auto", metric="minkowski", p=2
+)
 
 generator = factory.get_generator(clf)
 
 clf.fit(X, y)
 
-print( 'accuracy: ',clf.score(X,y))
+print("accuracy: ", clf.score(X, y))
 
 dumped = pickle.dumps(clf)
 print("SIZE: " + str(len(dumped)))
