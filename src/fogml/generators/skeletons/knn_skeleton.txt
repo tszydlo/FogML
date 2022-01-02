@@ -13,10 +13,10 @@ float pow2(int x){
 	return x*x;
 }
 
-struct Point{
-    int idx;    
-    double distance;     
-};
+typedef struct Point{
+    int idx;
+    double distance;
+} Point;
 
 void swap(Point* tab, int i1, int i2)
 {
@@ -55,19 +55,19 @@ void quick_sort(Point *tab, int left, int right){
 
 int <cname>(double* x){
 	double attributes[<members>][<features>] = <dataset_features>;
-	double member_class[<members>] = <member_class>;
+	int member_class[<members>] = <member_class>;
 	
   int k = <k_neighbours>;
   Point distance[k];
   
 	//kod do znalezienia k najbliższych
-	for(int i = 0; i < members; i++){
+	for(int i = 0; i < <members>; i++){
   	double res = 0;
-    for(int j = 0; j < features; i++){
-  			res += pow2(x[j] - attrbutes[i][j]);
+    for(int j = 0; j < <features>; i++){
+  			res += pow2(x[j] - attributes[i][j]);
   	}
     res = sqrt(res);
-    struct Point res_dist;
+    Point res_dist;
     res_dist.idx = i;
     res_dist.distance = res;
     distance[i] = res_dist;
