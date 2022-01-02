@@ -38,7 +38,7 @@ y = iris.target
 # )
 # clf = RandomForestClassifier(n_estimators=10)
 clf = KNeighborsClassifier(
-    n_neighbors=5, weights="uniform", algorithm="auto", metric="minkowski", p=2
+    n_neighbors=5, weights="distance", algorithm="auto", metric="minkowski", p=2
 )
 
 generator = factory.get_generator(clf)

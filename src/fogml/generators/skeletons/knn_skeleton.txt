@@ -58,7 +58,7 @@ int <cname>(double* x){
 	double member_class[<members>] = <member_class>;
 	
   int k = <k_neighbours>;
-  Point distance[k] = <distance_empty>; //[null, null, ... k razy]
+  Point distance[k];
   
 	//kod do znalezienia k najbliższych
 	for(int i = 0; i < members; i++){
@@ -76,17 +76,17 @@ int <cname>(double* x){
   quick_sort(distance, 0, k-1);
   
 	//znalezienie najliczniejszej klasy
-	int classCount[<class_count>] = <class_count_empty>; //[0,0,0,...,0]
+    int class_count[<class_count>] = <class_count_empty>; //[0,0,0,...,0]
   for(int i = 0; i < k; i++){
-    classCount[member_class[distance[i].idx]]++;
+    class_count[member_class[distance[i].idx]]++;
   }
   
   int max_count = -1;
   int idx_max = -1;
   for(int i = 0; i < k; i++){
-    if(classCount[i] > max_count){
+    if(class_count[i] > max_count){
       idx_max = i;
-      max_count = classCount[i]; 
+      max_count = class_count[i];
     }
   }
   
