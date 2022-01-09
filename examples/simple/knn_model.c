@@ -13,8 +13,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-#include <stdlib.h>
-#include <stdio.h>
 
 double sqrt(double number){
     double error = 0.00001;
@@ -36,20 +34,19 @@ typedef struct Point{
     double distance;
 } Point;
 
-void swap(Point* tab, int i1, int i2)
-{
-  Point temp = tab[i1];
-  tab[i1] = tab[i2];
-  tab[i2] = temp;
+void swap(Point* tab, int i1, int i2){
+    Point temp = tab[i1];
+    tab[i1] = tab[i2];
+    tab[i2] = temp;
 }
 
 void quick_sort(Point *tab, int left, int right){
     if(right <= left){
-      return;
+        return;
     }
 
     int i = left - 1;
-		int j = right + 1;
+	int j = right + 1;
     double pivot = tab[(left+right)/2].distance;
 
     while(1)
@@ -57,17 +54,17 @@ void quick_sort(Point *tab, int left, int right){
         while(pivot>tab[++i].distance);
         while(pivot<tab[--j].distance);
         if(i <= j){
-          swap(tab,i,j);
+            swap(tab,i,j);
         }
         else {
-          break;
+            break;
         }
     }
     if(j > left){
-      quick_sort(tab, left, j);
+        quick_sort(tab, left, j);
     }
     if(i < right){
-      quick_sort(tab, i, right);
+        quick_sort(tab, i, right);
     }
 }
 
@@ -226,63 +223,39 @@ int classifier(double* x){
 };
 	int member_class[150] = {0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, 2.000000, };
 	
-  int k = 6;
-  Point distance[150];
+    int k = 5;
+    Point distance[150];
   
 	//kod do znalezienia k najbliższych
-	for(int i = 0; i < 150; i++){
-  	double res = 0;
-    for(int j = 0; j < 4; j++){
-  			res += pow2(x[j] - attributes[i][j]);
-  	}
-    res = sqrt(res);
-    printf("%f \n", res);
-    Point res_dist;
-    res_dist.idx = i;
-    res_dist.distance = res;
-    distance[i] = res_dist;
-    printf("%d finished\n", i);
-  }
+    for(int i = 0; i < 150; i++){
+  	    double res = 0;
+        for(int j = 0; j < 4; j++){
+  		    res += pow2(x[j] - attributes[i][j]);
+  	    }
+        res = sqrt(res);
+        Point res_dist;
+        res_dist.idx = i;
+        res_dist.distance = res;
+        distance[i] = res_dist;
+    }
   
-  quick_sort(distance, 0, k-1);
+    quick_sort(distance, 0, 150-1);
   
 	//znalezienie najliczniejszej klasy
     int class_count[3] = {0.000000, 0.000000, 0.000000, }; //[0,0,0,...,0]
-  for(int i = 0; i < k; i++){
-    printf("%f %d %d\n", distance[i].distance, distance[i].idx, member_class[distance[i].idx]);
-    class_count[member_class[distance[i].idx]]++;
-  }
-  printf("\n");
-  
-  int max_count = -1;
-  int idx_max = -1;
-  for(int i = 0; i < k; i++){
-    if(class_count[i] > max_count){
-      idx_max = i;
-      max_count = class_count[i];
+    for(int i = 0; i < k; i++){
+        class_count[member_class[distance[i].idx]]++;
     }
-  }
-
-  printf("%d\n", max_count);
-  printf("%d\n", idx_max);
-
-  for(int i = 0; i < k; i++){
-    printf("%d ", class_count[i]);
-  }
-  printf("\n");
-
+  
+    int max_count = -1;
+    int idx_max = -1;
+    for(int i = 0; i < 3; i++){
+        if(class_count[i] > max_count){
+            idx_max = i;
+            max_count = class_count[i];
+        }
+    }
+  
   return idx_max;
   
-}
-
-int main(){
-    double x[4] = {5.9, 3.0, 4.2, 1.5, };
-
-
-    printf("%f\n", x[0]);
-    printf("%f\n", x[1]);
-    printf("%f\n", x[2]);
-    printf("%f\n", x[3]);
-
-    printf("%d\n", classifier(x));
 }
