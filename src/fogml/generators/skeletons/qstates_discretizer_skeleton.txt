@@ -1,0 +1,38 @@
+static float Q_states[] = <q_states>;
+    
+unsigned int RL_OBSERVATION_SIZE = <rl_observation_size>;
+
+unsigned int *observation_states;
+
+void fogml_discretizer_init(){
+    
+    observation_states = (float*)malloc(sizeof(unsigned int) * RL_OBSERVATION_SIZE);
+}
+
+unsigned long fogml_discretizer_get_state(float* observation){
+    for(int i = 0; i < RL_OBSERVATION_SIZE; i++){
+        float window = (Q_states[i*3+1] - Q_states[i*3+0]) / Q_states[i*3+2]; // (max-min) / num
+        int state = (int)((observation[i] - Q_states[i*3+0]) / window) + 1;
+        
+        if (state < 0) {
+            state = 0;
+        }
+        
+        if (state > Q_states[i*3+2] + 1) {
+            state = Q_states[i*3+2] + 1;
+        }
+        
+        observation_states[i] = state;
+    }
+    
+    unsigned long result = 0;
+    unsigned long mul = 1;
+
+    for(int i = 0; i < RL_OBSERVATION_SIZE; i++){
+        result = result + mul * observation_states[i];
+        mul = mul * (Q_states[i*3+2] + 2); 
+        
+    }
+    
+    return result;
+}
