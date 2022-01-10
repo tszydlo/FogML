@@ -31,7 +31,44 @@ generator = factory.get_generator(clf)
 generator.generate()
 ```
 
-# FogML research
+## Reinforcement Learning
+
+```
+import gym
+
+from fogml.generators import GeneratorFactory
+from fogml.rl.qlearning import QLearning, QStatesIntervals
+
+env = gym.make('MountainCar-v0')
+
+#create QStates discretizer table using QStatesIntervals()
+stateSpace = [
+    [-1.2, 0.6, 20],
+    [-0.07, 0.07, 20]
+]
+qStates = QStatesIntervals(stateSpace)
+
+#create QLearning agent
+qAgent = QLearning(qStates.getStates(), env.action_space.n)
+
+for episode in range(EPISODES):
+    #TODO Train the model
+    #see examples
+
+factory = GeneratorFactory()
+
+generatorQAgent = factory.get_generator(qAgent)
+generatorQStates = factory.get_generator(qStates)
+
+generatorQAgent.generate(fname='FogML_RL_Arduino\qlearning_model_test.c')
+generatorQStates.generate(fname = 'FogML_RL_Arduino\qstates_discretizer_test.c')
+
+```
+
+See it in action:
+https://www.youtube.com/watch?v=yEr5tjBrY70
+
+## FogML research
 
 If you think that the project is interesting to you, please cite the paper:
 _Tomasz Szydlo, Joanna Sendorek, Robert Brzoza-Woch, Enabling machine learning on resource constrained devices by source code generation of the learned models, ICCS 2018_
