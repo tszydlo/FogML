@@ -1,0 +1,29 @@
+static float Q_table[] = <q_table>;
+
+unsigned long RL_STATES = <states>;
+unsigned int  RL_ACTIONS = <actions>;
+
+unsigned long internal_state;
+
+void fogml_qlearning_init(){
+}
+
+void fogml_qlearning_update_state(unsigned long state){
+    internal_state = state;
+}
+
+unsigned int fogml_qlearning_select_action(){
+    unsigned long index = internal_state * RL_ACTIONS;
+
+    unsigned int action = 0;
+    float max = Q_table[index];
+
+    for(int i = 0; i < RL_ACTIONS; i++){
+        if (Q_table[index + i] > max) {
+            max = Q_table[index + i];
+            action = i;
+            
+        }
+    }
+    return action;
+}

@@ -19,8 +19,11 @@ import sklearn.ensemble
 from sklearn import *
 from sklearn.neural_network import *
 
+import fogml.rl
 from .bayes_code_generator import BayesCodeGenerator
 from .mlp_code_generator import MlpCodeGenerator
+from .qlearning_code_generator import QLearningCodeGenerator
+from .qstatesintervals_code_generator import QStatesIntervalsCodeGenerator
 from .random_forest_generator import RandomForestCodeGenerator
 from .tree_code_generator import TreeCodeGenerator
 
@@ -31,7 +34,9 @@ class GeneratorFactory:
         sklearn.tree.DecisionTreeClassifier: TreeCodeGenerator,
         sklearn.naive_bayes.GaussianNB: BayesCodeGenerator,
         sklearn.neural_network.MLPClassifier: MlpCodeGenerator,
-        sklearn.ensemble.RandomForestClassifier: RandomForestCodeGenerator
+        sklearn.ensemble.RandomForestClassifier: RandomForestCodeGenerator,
+        fogml.rl.QLearning: QLearningCodeGenerator,
+        fogml.rl.QStatesIntervals: QStatesIntervalsCodeGenerator
     }
 
     def get_generator(self, clf):
