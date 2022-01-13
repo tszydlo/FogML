@@ -1,14 +1,3 @@
-double sqrt(double number){
-    double error = 0.00001;
-    double s = number;
-
-    while ((s - number / s) > error)
-    {
-        s = (s + number / s) / 2;
-    }
-    return s;
-}
-
 double pow2(double x){
 	return x*x;
 }
@@ -59,13 +48,12 @@ int <cname>(double* x){
     int k = <k_neighbours>;
     Point distance[<members>];
   
-	//kod do znalezienia k najbliższych
+	//find k nearest
     for(int i = 0; i < <members>; i++){
   	    double res = 0;
         for(int j = 0; j < <features>; j++){
   		    res += pow2(x[j] - attributes[i][j]);
   	    }
-        res = sqrt(res);
         Point res_dist;
         res_dist.idx = i;
         res_dist.distance = res;
@@ -74,7 +62,7 @@ int <cname>(double* x){
   
     quick_sort(distance, 0, <members>-1);
   
-	//znalezienie najliczniejszej klasy
+	//find the class with most members
     int class_count[<class_count>] = <class_count_empty>; //[0,0,0,...,0]
     for(int i = 0; i < k; i++){
         class_count[member_class[distance[i].idx]]++;
@@ -88,7 +76,7 @@ int <cname>(double* x){
             max_count = class_count[i];
         }
     }
-  
-  return idx_max;
-  
+
+    return idx_max;
+
 }
