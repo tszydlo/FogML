@@ -1,0 +1,119 @@
+double sqrt(double number){
+    double error = 0.00001;
+    double s = number;
+
+    while ((s - number / s) > error)
+    {
+        s = (s + number / s) / 2;
+    }
+    return s;
+}
+
+double pow2(double x){
+	return x*x;
+}
+
+double abs2(double x){
+    if(x < 0) return -x;
+    else return x;
+}
+
+double max2(double x, double y){
+    if(x < y) return y;
+    else return x;
+}
+
+typedef struct Point{
+    int idx;
+    double distance;
+} Point;
+
+void swap(Point* tab, int i1, int i2){
+    Point temp = tab[i1];
+    tab[i1] = tab[i2];
+    tab[i2] = temp;
+}
+
+void quick_sort(Point *tab, int left, int right){
+    if(right <= left){
+        return;
+    }
+
+    int i = left - 1;
+	int j = right + 1;
+    double pivot = tab[(left+right)/2].distance;
+
+    while(1)
+    {
+        while(pivot>tab[++i].distance);
+        while(pivot<tab[--j].distance);
+        if(i <= j){
+            swap(tab,i,j);
+        }
+        else {
+            break;
+        }
+    }
+    if(j > left){
+        quick_sort(tab, left, j);
+    }
+    if(i < right){
+        quick_sort(tab, i, right);
+    }
+}
+
+int <cname>(double* x){
+	static double attributes[<members>][<features>] = <dataset_features>;
+	static int member_class[<members>] = <member_class>;
+	
+    int k = <k_neighbours>;
+    Point distance[<members>];
+  
+	//find k nearest
+    for(int i = 0; i < <members>; i++){
+    Point distance[<k_neighbours>+1];
+
+    for(int i = 0; i < k; i++){
+        double res = 0;
+        for(int j = 0; j < <features>; j++){
+  		    <metric>;
+  	    }
+        Point res_dist;
+        res_dist.idx = i;
+        res_dist.distance = res;
+        distance[i] = res_dist;
+    }
+
+	//kod do znalezienia k najbliższych
+    for(int i = k; i < <members>; i++){
+  	    double res = 0;
+        for(int j = 0; j < <features>; j++){
+  		    <metric>;
+  	    }
+
+        Point res_dist;
+        res_dist.idx = i;
+        res_dist.distance = res;
+
+        distance[k] = res_dist;
+        quick_sort(distance, 0, k);
+    }
+  
+	//find the class with most members
+    int class_count[<class_count>] = <class_count_empty>; //[0,0,0,...,0]
+    for(int i = 0; i < k; i++){
+        class_count[member_class[distance[i].idx]]++;
+    }
+  
+    int max_count = -1;
+    int idx_max = -1;
+    for(int i = 0; i < <class_count>; i++){
+        if(class_count[i] > max_count){
+            idx_max = i;
+            max_count = class_count[i];
+        }
+    }
+
+    return idx_max;
+
+}

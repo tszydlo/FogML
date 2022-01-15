@@ -23,6 +23,7 @@ from .bayes_code_generator import BayesCodeGenerator
 from .mlp_code_generator import MlpCodeGenerator
 from .random_forest_generator import RandomForestCodeGenerator
 from .tree_code_generator import TreeCodeGenerator
+from .knn_code_generator import KNNCodeGenerator
 
 
 class GeneratorFactory:
@@ -31,7 +32,8 @@ class GeneratorFactory:
         sklearn.tree.DecisionTreeClassifier: TreeCodeGenerator,
         sklearn.naive_bayes.GaussianNB: BayesCodeGenerator,
         sklearn.neural_network.MLPClassifier: MlpCodeGenerator,
-        sklearn.ensemble.RandomForestClassifier: RandomForestCodeGenerator
+        sklearn.ensemble.RandomForestClassifier: RandomForestCodeGenerator,
+        sklearn.neighbors.KNeighborsClassifier: KNNCodeGenerator,
     }
 
     def get_generator(self, clf):
