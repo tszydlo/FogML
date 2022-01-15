@@ -1,5 +1,3 @@
-import math
-
 import numpy as np
 import os
 
@@ -37,6 +35,15 @@ class KNNCodeGenerator(BaseGenerator):
         zero_array = np.zeros(size)
         return self.generate_c_array(zero_array)
 
+    def metric_calculation(self, metric):
+        if metric == "euclidean":
+            return "res += pow2(x[j] - attributes[i][j])"
+        elif metric == "manhattan":
+            return "res += abs2(x[j] - attributes[i][j])"
+        elif metric == "chebyshev":
+            return "res = max2(res, abs2(x[j] - attributes[i][j]))"
+        pass
+
     def generate(self, fname="knn_model.c", cname="classifier", **kwargs):
 
         classes = len(self.clf.classes_)
@@ -56,5 +63,7 @@ class KNNCodeGenerator(BaseGenerator):
             code = code.replace('<member_class>', self.generate_c_array(Y))
             code = code.replace('<class_count_empty>', self.generate_zero_array(classes))
             code = code.replace('<cname>', cname)
+            code = code.replace('<metric>', self.metric_calculation(self.clf.metric))
+
             with open(fname, 'w') as output_file:
                 output_file.write(code)

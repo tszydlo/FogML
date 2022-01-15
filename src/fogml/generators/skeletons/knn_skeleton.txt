@@ -1,16 +1,15 @@
-double sqrt(double number){
-    double error = 0.00001;
-    double s = number;
-
-    while ((s - number / s) > error)
-    {
-        s = (s + number / s) / 2;
-    }
-    return s;
-}
-
 double pow2(double x){
 	return x*x;
+}
+
+double abs2(double x){
+    if(x < 0) return -x;
+    else return x;
+}
+
+double max2(double x, double y){
+    if(x < y) return y;
+    else return x;
 }
 
 typedef struct Point{
@@ -53,26 +52,38 @@ void quick_sort(Point *tab, int left, int right){
 }
 
 int <cname>(double* x){
-	double attributes[<members>][<features>] = <dataset_features>;
-	int member_class[<members>] = <member_class>;
+	static double attributes[<members>][<features>] = <dataset_features>;
+	static int member_class[<members>] = <member_class>;
 	
     int k = <k_neighbours>;
-    Point distance[<members>];
-  
-	//kod do znalezienia k najbliższych
-    for(int i = 0; i < <members>; i++){
-  	    double res = 0;
+    Point distance[<k_neighbours>+1];
+
+    for(int i = 0; i < k; i++){
+        double res = 0;
         for(int j = 0; j < <features>; j++){
-  		    res += pow2(x[j] - attributes[i][j]);
+  		    <metric>;
   	    }
-        res = sqrt(res);
         Point res_dist;
         res_dist.idx = i;
         res_dist.distance = res;
         distance[i] = res_dist;
     }
-  
-    quick_sort(distance, 0, <members>-1);
+
+	//kod do znalezienia k najbliższych
+    for(int i = k; i < <members>; i++){
+  	    double res = 0;
+
+        for(int j = 0; j < <features>; j++){
+  		    <metric>;
+  	    }
+
+        Point res_dist;
+        res_dist.idx = i;
+        res_dist.distance = res;
+
+        distance[k] = res_dist;
+        quick_sort(distance, 0, k);
+    }
   
 	//znalezienie najliczniejszej klasy
     int class_count[<class_count>] = <class_count_empty>; //[0,0,0,...,0]
