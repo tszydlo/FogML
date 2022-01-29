@@ -13,39 +13,29 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 """
+import math
 
 import gym
 import numpy as np
 
 from fogml.generators import GeneratorFactory
-from fogml.rl.qlearning import QLearning, QStatesCustom, QStatesIntervals
+from fogml.rl.qlearning import QLearning, QStatesIntervals
 
 env = gym.make('CartPole-v1')
 
-#create QStates discretizer table using QStatesCustom()
-#stateSpace = [
-#    [x / 100 for x in range(-300, 300 + 1, 50)],
-#    [x / 100 for x in range(-300, 300 + 1, 100)],
-#    [x / 100 for x in range(-25, 25+1, 1)],
-#    [x / 100 for x in range(-250, 250+1, 10)],
-#]
-#print(stateSpace)
-#qStates = QStatesCustom(stateSpace)
-
-#create QStates discretizer table using QStatesIntervals()
-#stateSpace = [
-#    [-2.4, 2.4, 10],#10,10,30,30
-#    [-10, 10, 10],
-#    [-0.25, 0.25, 20],
-#    [-2.5, 2.5, 20],
-#]
-
 #After optimization
+#stateSpace = [
+#    [-1.6, 1.6, 1],
+#    [-0.17, 0.17, 1],
+#    [-0.28, 0.28, 4],
+#    [-0.58, 0.58, 4],
+#]
+
 stateSpace = [
-    [-1.2, 1.2, 5],
-    [-1.5, 1.5, 5],
-    [-0.25, 0.25, 19],
-    [-2.5, 2.5, 19],
+    [-1.6, 1.6, 1],
+    [-0.17, 0.17, 1],
+    [-0.42, 0.42, 6],
+    [-0.87, 0.87, 6],
 ]
 
 print(stateSpace)
@@ -54,27 +44,23 @@ qStates = QStatesIntervals(stateSpace)
 print("Number of states = {}".format(qStates.getStates()))
 
 #create QLearning agent
-qAgent = QLearning(qStates.getStates(), env.action_space.n, discount=0.95, zeros=False)
+qAgent = QLearning(qStates.getStates(), env.action_space.n, learning_rate=0.2, discount=1.0, zeros=True)
 
-EPSILON = 0.6
-qAgent.setEpsilon(EPSILON)
-
-EXPLOITATION_EPISODE = 14000
-EPISODES = 15000
+EXPLOITATION_EPISODE = 800
+EPISODES = 1200
 STEPS = 500
 
 mean_reward = 0
-epsilon = EPSILON
 
 obs_track=[]
 
 for episode in range(EPISODES):
-    if epsilon > 0:
-        epsilon = EPSILON - (episode / EXPLOITATION_EPISODE) * EPSILON
-        qAgent.setEpsilon(epsilon)
-
-    if epsilon > 0:
-        qAgent.setEpsilon(epsilon)
+    if episode < EXPLOITATION_EPISODE:
+        epsilon = max(0.1, min(1., 1. - math.log10((episode + 1) / 25)))
+    else:
+        epsilon = 0
+    qAgent.setEpsilon(epsilon)
+    qAgent.setLearningRate(epsilon)
 
     if episode % 100 == 0:
         print("Episode {}".format(episode))
@@ -109,14 +95,9 @@ for episode in range(EPISODES):
             qAgent.updateState(new_state)
 
         if done:
-            #penalty
-            #qAgent.updateQ(previous_state, action, 0)
             break
 
-        previous_state = new_state
 env.close()
-
-print(qAgent.getQ())
 
 print("Statistics to optimize the state discretizer function:")
 obs_track = np.array(obs_track)

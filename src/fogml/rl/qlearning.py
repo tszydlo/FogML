@@ -17,6 +17,9 @@ class QLearning():
     def setEpsilon(self, epsilon):
         self.epsilon = epsilon
 
+    def setLearningRate(self, learning_rate):
+        self.learning_rate = learning_rate
+
     def selectActionWithExploration(self):
         if np.random.random() > self.epsilon:
             action = np.argmax(self.Q[self.state])
