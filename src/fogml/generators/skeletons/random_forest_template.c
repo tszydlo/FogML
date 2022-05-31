@@ -14,7 +14,7 @@
 {{ indent }}results[{{ index }}] = {{ clf["classes_"][class_index] }};
 {%- endif -%}
 {%- endmacro -%}
-int classify(double * x){
+int classify(float * x){
   int results[{{ clf["estimators_"]|length }}];
 {%- set ns = namespace(index=0) -%}
 {% for estimator in clf["estimators_"] %}
@@ -36,3 +36,4 @@ int classify(double * x){
       result_class = i;
     }
   }
+  return result_class;
