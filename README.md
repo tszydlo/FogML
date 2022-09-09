@@ -80,7 +80,14 @@ https://www.youtube.com/watch?v=yEr5tjBrY70
 
 ## FogML research
 
-If you think that the project is interesting to you, please cite the paper:
-_Tomasz Szydlo, Joanna Sendorek, Robert Brzoza-Woch, Enabling machine learning on resource constrained devices by source code generation of the learned models, ICCS 2018_
+If you think that the project is interesting to you, please cite the papers:
+
+_Tomasz Szydlo, Online Anomaly Detection Based On Reservoir Sampling and LOF for IoT devices, CoRR abs/2206.14265 (2022)_
+
+_Tomasz Szydlo, Joanna Sendorek, Robert Brzoza-Woch, Enabling machine learning on resource constrained devices by source code generation of the learned models, ICCS 2018: 682-694_
 
 _The research was supported by the National Centre for Research and Development (NCBiR) under Grant No. LIDER/15/0144 /L-7/15/NCBR/2016._
+
+
+## Press
+https://blog.arduino.cc/2022/07/22/industrial-iot-anomaly-detection-on-microcontrollers/
