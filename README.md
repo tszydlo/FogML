@@ -6,6 +6,10 @@ The structure of the project is as follows:
 * the `src` folder contains the source code generators for machine learning models i.e.: naive bayes, decision trees/forrest and neural nets;
 * the `example` folder contains the simple examples and the MNIST digit recognition for Arduino board and the simple TFT touchscreen.
 
+Examples of anomaly detection and classification algorithms provided by the FogML project for embedded devices:
+* FogML-SDK [https://github.com/tszydlo/fogml_sdk]
+* FogML Arduino [https://github.com/tszydlo/FogML-Arduino]
+
 ## Usage
 
 `pip install fogml`
