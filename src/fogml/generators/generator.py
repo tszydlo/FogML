@@ -20,11 +20,13 @@ from sklearn import *
 from sklearn.neural_network import *
 
 import fogml.rl
+from .anomaly_detector_generator import KMeansAnomalyDetectorGenerator
 from .bayes_code_generator import BayesCodeGenerator
 from .mlp_code_generator import MlpCodeGenerator
 from .qlearning_code_generator import QLearningCodeGenerator
 from .qstatesintervals_code_generator import QStatesIntervalsCodeGenerator
 from .random_forest_generator import RandomForestCodeGenerator
+from .scaler_generator import MinMaxScalerGenerator
 from .tree_code_generator import TreeCodeGenerator
 
 
@@ -35,8 +37,10 @@ class GeneratorFactory:
         sklearn.naive_bayes.GaussianNB: BayesCodeGenerator,
         sklearn.neural_network.MLPClassifier: MlpCodeGenerator,
         sklearn.ensemble.RandomForestClassifier: RandomForestCodeGenerator,
+        sklearn.preprocessing.MinMaxScaler: MinMaxScalerGenerator,
         fogml.rl.QLearning: QLearningCodeGenerator,
-        fogml.rl.QStatesIntervals: QStatesIntervalsCodeGenerator
+        fogml.rl.QStatesIntervals: QStatesIntervalsCodeGenerator,
+        fogml.anomaly.KMeansAnomalyDetector: KMeansAnomalyDetectorGenerator
     }
 
     def get_generator(self, clf):

@@ -1,0 +1,10 @@
+#include "../fogml_sdk/scaler/fogml_scaler.h"
+
+float mins_tab[] = <mins_tab>;
+float maxs_tab[] = <maxs_tab>;
+
+fogml_min_max_scaler_config_t min_max_scaler_config = {
+    .vector_size = <vector_size>,
+    .mins = mins_tab,
+    .maxs = maxs_tab
+};

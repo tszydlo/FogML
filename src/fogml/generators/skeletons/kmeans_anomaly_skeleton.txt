@@ -1,0 +1,11 @@
+#include "../fogml_sdk/anomaly/fogml_anomaly.h"
+
+float centroids_tab[] = <centroids_tab>;
+float zscores_tab[] = <zscores_tab>;
+
+fogml_anomaly_config_t kmeans_anomaly_config = {
+    .vector_size = <vector_size>,
+    .clusters = <clusters>,
+    .centroids = centroids_tab,
+    .zscores = zscores_tab
+};
