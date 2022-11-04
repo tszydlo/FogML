@@ -5,7 +5,7 @@ import pandas as pd
 from fogml.anomaly import KMeansAnomalyDetector
 from generators import GeneratorFactory
 
-DATA = ["0_idle.csv", "1_circle.csv", "2_snake.csv", "3_up_down.csv"]
+DATA = ["0_idle.csv", "1_circle.csv", "2_snake.csv"]
 DATA_TEST = ["0_idle.csv", "1_circle.csv", "2_snake.csv", "3_up_down.csv"]
 
 def fogml_prepare_data(data):

@@ -1,1 +1,1 @@
-from .classes import KMeansAnomalyDetector
+from .detectors import KMeansAnomalyDetector
