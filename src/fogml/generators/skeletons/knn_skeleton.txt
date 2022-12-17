@@ -1,0 +1,9 @@
+int <cname>(double* x){
+    double X_train[<n_samples>][<features>] = <X_train>;
+    double y_train[<n_samples>] = <Y_train>;
+    int n_neighbors = <n_neighbors>;
+    double classes[<n_classes>] = <classes>;
+    double pred_y;
+
+    return pred_y;
+}
