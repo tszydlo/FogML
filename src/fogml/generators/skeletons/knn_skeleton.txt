@@ -1,9 +1,71 @@
-int <cname>(double* x){
-    double X_train[<n_samples>][<features>] = <X_train>;
-    double y_train[<n_samples>] = <Y_train>;
-    int n_neighbors = <n_neighbors>;
-    double classes[<n_classes>] = <classes>;
-    double pred_y;
 
-    return pred_y;
+#include <stdio.h>
+#include <math.h>
+#define N_SAMPLES <n_samples>
+#define N_FEATURES <features>
+#define N_NEIGHBORS <n_neighbors>
+#define point struct Point
+
+struct Point{
+    double pos[N_FEATURES];
+    double class;
+    double distance;
+};
+
+void swap(point *xp, point *yp){
+    point temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
+
+void bubble_sort(point arr[]){
+    int i, j;
+    for (i = 0; i < N_SAMPLES - 1; i++)
+
+        for (j = 0; j < N_SAMPLES - i - 1; j++)
+            if (arr[j].distance > arr[j + 1].distance)
+                swap(&arr[j], &arr[j + 1]);
+}
+
+
+double most_frequent(double* arr)
+{
+    int maxcount = 0;
+    double element_having_max_freq;
+    for (int i = 0; i < N_NEIGHBORS; i++) {
+        int count = 0;
+        for (int j = 0; j < N_NEIGHBORS; j++) {
+            if (arr[i] == arr[j])
+                count++;
+        }
+
+        if (count > maxcount) {
+            maxcount = count;
+            element_having_max_freq = arr[i];
+        }
+    }
+
+    return element_having_max_freq;
+}
+
+double <cname>(double* x){
+    point train_data[N_SAMPLES] = <train_data>;
+
+    for(int i=0; i < N_SAMPLES;i++){
+        double sum = 0;
+        for(int j=0;j < N_FEATURES;j++){
+            sum+=(train_data[i].pos[j] - x[j])*(train_data[i].pos[j] - x[j]);
+        }
+        train_data[i].distance = sqrt(sum);
+    }
+
+    bubble_sort(train_data);
+
+    double k_neighbors_classes[N_NEIGHBORS];
+
+    for(int i=0;i<N_NEIGHBORS;i++){
+        k_neighbors_classes[i] = train_data[i].class;
+    }
+
+    return most_frequent(k_neighbors_classes);
 }
