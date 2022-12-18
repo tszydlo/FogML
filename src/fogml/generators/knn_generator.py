@@ -26,11 +26,13 @@ class KNClassifierGenerator(BaseGenerator):
         y = self.clf._y
         y = y.astype(str)
 
-        X_str = "{{" + "},{".join([",".join(row) for row in X]) + "}}"
-        y_str = "{" + ",".join(y) + "}"
-        classes_str = self.clf.classes_.astype(str)
-        classes_str = "{" + ",".join(classes_str) + "}"
+        # X_str = "{{" + "},{".join([",".join(row) for row in X]) + "}}"
+        X_str = "{\n"
+        for i, row in enumerate(X):
+            X_str += "\t\t{.pos={" + ', '.join(row) +"}, .class=" +y[i] +  "},\n"
+        X_str +="\t}"
 
+        # y_str = "{" + ",".join(y) + "}"
 
         with open(os.path.join(os.path.dirname(__file__), self.skeleton_path)) as skeleton:
             code = skeleton.read()
@@ -41,11 +43,8 @@ class KNClassifierGenerator(BaseGenerator):
             code = code.replace('<cname>', cname)
             code = code.replace('<train_data>', X_str)
 
-
-
-
-
             with open(fname, 'w') as output_file:
                 output_file.write(code)
     
     
+
