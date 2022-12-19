@@ -1,71 +1,23 @@
-
-#include <stdio.h>
-#include <math.h>
-#define N_SAMPLES <n_samples>
-#define N_FEATURES <features>
+#include "../fogml_sdk/knn_classifier/knn_classifier.h"
+#define N_FEATURES <n_features>
 #define N_NEIGHBORS <n_neighbors>
-#define point struct Point
+#define N_SAMPLES <n_samples>
 
-struct Point{
-    double pos[N_FEATURES];
-    double class;
-    double distance;
+float samples[N_SAMPLES * N_FEATURES] = <sample_features>;
+int classes[N_SAMPLES] = <sample_classes>;
+
+// buffers
+float distance_buffer[N_NEIGHBORS];
+int classes_buffer[N_NEIGHBORS];
+int class_count_buffer[N_NEIGHBORS];
+
+fogml_knn_classifier_config_t knn_config = {
+    .n_neighbors = N_NEIGHBORS,
+    .n_features = N_FEATURES,
+    .data_features = samples,
+    .data_classes = classes,
+    .n_data_points = N_SAMPLES,
+    .nearest_classes_buffer = classes_buffer,
+    .nearest_distances_buffer = distance_buffer,
+    .nn_class_counts_buffer = class_count_buffer
 };
-
-void swap(point *xp, point *yp){
-    point temp = *xp;
-    *xp = *yp;
-    *yp = temp;
-}
-
-void bubble_sort(point arr[]){
-    int i, j;
-    for (i = 0; i < N_SAMPLES - 1; i++)
-
-        for (j = 0; j < N_SAMPLES - i - 1; j++)
-            if (arr[j].distance > arr[j + 1].distance)
-                swap(&arr[j], &arr[j + 1]);
-}
-
-
-double most_frequent(double* arr)
-{
-    int max_count = 0;
-    double element_having_max_freq;
-    for (int i = 0; i < N_NEIGHBORS; i++) {
-        int count = 0;
-        for (int j = 0; j < N_NEIGHBORS; j++) {
-            if (arr[i] == arr[j])
-                count++;
-        }
-
-        if (count > max_count) {
-            max_count = count;
-            element_having_max_freq = arr[i];
-        }
-    }
-
-    return element_having_max_freq;
-}
-
-double <cname>(double* x){
-    point train_data[N_SAMPLES] = <train_data>;
-
-    for(int i=0; i < N_SAMPLES;i++){
-        double sum = 0;
-        for(int j=0;j < N_FEATURES;j++){
-            sum+=(train_data[i].pos[j] - x[j])*(train_data[i].pos[j] - x[j]);
-        }
-        train_data[i].distance = sqrt(sum);
-    }
-
-    bubble_sort(train_data);
-
-    double k_neighbors_classes[N_NEIGHBORS];
-
-    for(int i=0;i<N_NEIGHBORS;i++){
-        k_neighbors_classes[i] = train_data[i].class;
-    }
-
-    return most_frequent(k_neighbors_classes);
-}
