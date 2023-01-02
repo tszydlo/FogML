@@ -1,14 +1,21 @@
 # FogML
 
-Due to the development of IoT solutions, we can observe the constantly growing number of these devices in almost every aspect of our lives. The machine learning may improve increase their intelligence and smartness. Unfortunately, the highly regarded programming libraries consume to much resources to be ported to the embedded processors.
+Due to the development of IoT solutions, we can observe the constantly growing
+number of these devices in almost every aspect of our lives. The machine
+learning may improve their artifical intelligence and smartness. Unfortunately,
+the highly regarded programming libraries consume too much resources to be
+ported to the embedded processors.
 
 ![Classification pipeline](./doc/algorithms.png)
 
 The structure of the project is as follows:
-* the `src` folder contains the source code generators for machine learning models i.e.: naive bayes, decision trees/forrest and neural nets;
-* the `example` folder contains the simple examples and the MNIST digit recognition for Arduino board and the simple TFT touchscreen.
+* the `src` folder contains the source code generators for machine learning
+  models i.e.: naive Bayes, decision trees/forrest and neural nets;
+* the `example` folder contains the simple examples and the MNIST digit
+  recognition for Arduino board and the simple TFT touchscreen.
 
-Examples of anomaly detection and classification algorithms provided by the FogML project for embedded devices:
+Examples of anomaly detection and classification algorithms provided by the
+FogML project for embedded devices:
 * `FogML-SDK` [https://github.com/tszydlo/fogml_sdk]
 * `FogML Arduino` [https://github.com/tszydlo/FogML-Arduino]
 * `FogML Zephyr OS` [https://github.com/tszydlo/FogML-Zephyr]
