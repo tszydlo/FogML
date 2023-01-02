@@ -9,10 +9,10 @@ ported to the embedded processors.
 ![Classification pipeline](./doc/algorithms.png)
 
 The structure of the project is as follows:
-* the `src` folder contains the source code generators for machine learning
+* the [src](src) folder contains the source code generators for machine learning
   models i.e.: naive Bayes, decision trees/forrest and neural nets;
-* the `example` folder contains the simple examples and the MNIST digit
-  recognition for Arduino board and the simple TFT touchscreen.
+* the [examples](examples) folder contains the simple examples and the MNIST
+  digit recognition for Arduino board and the simple TFT touchscreen.
 
 Examples of anomaly detection and classification algorithms provided by the
 FogML project for embedded devices:
