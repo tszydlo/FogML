@@ -87,6 +87,8 @@ https://www.youtube.com/watch?v=yEr5tjBrY70
 
 If you think that the project is interesting to you, please cite the papers:
 
+_Tomasz Szydlo, Marcin Nagy, Device management and network connectivity as missing elements in TinyML landscape, TinyML Research Summit 2023_
+
 _Tomasz Szydlo, Online Anomaly Detection Based On Reservoir Sampling and LOF for IoT devices, CoRR abs/2206.14265 (2022)_
 
 _Tomasz Szydlo, Prem Prakash Jayaraman, Yinhao Li, Graham Morgan, Rajiv Ranjan, TinyRL: Towards Reinforcement Learning on Tiny Embedded Devices. CIKM 2022, 4985-4988_
