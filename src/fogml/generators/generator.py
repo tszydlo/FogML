@@ -21,7 +21,7 @@ from sklearn.neural_network import *
 
 import fogml.rl
 import fogml.anomaly
-from .anomaly_detector_generator import KMeansAnomalyDetectorGenerator
+from .kmeans_anomaly_detector_generator import KMeansAnomalyDetectorGenerator
 from .bayes_code_generator import BayesCodeGenerator
 from .isolation_forest_generator import IsolationForestAnomalyDetectorGenerator
 from .mlp_code_generator import MlpCodeGenerator
