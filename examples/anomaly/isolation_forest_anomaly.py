@@ -47,6 +47,7 @@ anomalyDetector = IsolationForestAnomalyDetector(n_estimators=100, max_samples='
 anomalyDetector.fit(data_norm)
 ##################################################################
 
+# TODO: the results of predict are not correct ?
 res = anomalyDetector.predict(data_test_norm)
 print(res)
 
