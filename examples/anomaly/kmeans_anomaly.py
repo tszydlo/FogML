@@ -2,8 +2,8 @@ from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 import pandas as pd
 
-from fogml.anomaly import KMeansAnomalyDetector
-from generators import GeneratorFactory
+from src.fogml.anomaly import KMeansAnomalyDetector
+from src.fogml.generators import GeneratorFactory
 
 DATA = ["0_idle.csv", "1_circle.csv", "2_snake.csv"]
 DATA_TEST = ["0_idle.csv", "1_circle.csv", "2_snake.csv", "3_up_down.csv"]
