@@ -4,14 +4,14 @@ from src.fogml.generators.base_generator import BaseGenerator
 class IsolationForestAnomalyDetectorGenerator(BaseGenerator):
     skeleton_path = 'skeletons/isolation_forest_skeleton.txt'
 
-    def __init__(self, clf):
-        self.clf = clf
+    def __init__(self, anomaly_detector):
+        self.anomaly_detector = anomaly_detector
 
     def generate(self, fname='isolation_forest_test.c'):
-        n_estimators = self.clf.n_estimators
-        max_features = self.clf.max_samples
-        n_outputs = self.clf.n_features_in_
-        trees = self.clf.estimators_
+        n_estimators = self.anomaly_detector.clf.n_estimators
+        max_features = self.anomaly_detector.clf.max_samples
+        n_outputs = self.anomaly_detector.clf.n_features_in_
+        trees = self.anomaly_detector.clf.estimators_
 
         # Write header file
         header_file = fname[:-2] + ".h"
