@@ -23,7 +23,7 @@ import fogml.rl
 import fogml.anomaly
 from .anomaly_detector_generator import KMeansAnomalyDetectorGenerator
 from .bayes_code_generator import BayesCodeGenerator
-from .isolation_forest_generator import IsolationForestGenerator
+from .isolation_forest_generator import IsolationForestAnomalyDetectorGenerator
 from .mlp_code_generator import MlpCodeGenerator
 from .qlearning_code_generator import QLearningCodeGenerator
 from .qstatesintervals_code_generator import QStatesIntervalsCodeGenerator
@@ -43,7 +43,7 @@ class GeneratorFactory:
         fogml.rl.QLearning: QLearningCodeGenerator,
         fogml.rl.QStatesIntervals: QStatesIntervalsCodeGenerator,
         fogml.anomaly.KMeansAnomalyDetector: KMeansAnomalyDetectorGenerator,
-        fogml.anomaly.IsolationForest: IsolationForestGenerator
+        fogml.anomaly.IsolationForestAnomalyDetector: IsolationForestAnomalyDetectorGenerator
     }
 
     def get_generator(self, clf):

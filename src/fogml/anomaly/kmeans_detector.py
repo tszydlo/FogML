@@ -58,6 +58,3 @@ class KMeansAnomalyDetector(ClassifierMixin):
         proba[proba > 0] = 1
 
         return proba
-
-class IsolationForest():
-    
