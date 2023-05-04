@@ -9,7 +9,6 @@ DATA = ["0_idle.csv", "1_circle.csv", "2_snake.csv"]
 DATA_TEST = ["0_idle.csv", "1_circle.csv", "2_snake.csv", "3_up_down.csv"]
 
 
-# TODO: data preparation - to be changed ?
 def fogml_prepare_data(data):
     spX_t = []
     spY_t = []
@@ -47,7 +46,7 @@ anomalyDetector = IsolationForestAnomalyDetector(n_estimators=100, max_samples='
 anomalyDetector.fit(data_norm)
 ##################################################################
 
-# TODO: the results of predict are not correct ?
+# TODO: the results of predict are not correct? maybe use threshold?
 res = anomalyDetector.predict(data_test_norm)
 print(res)
 

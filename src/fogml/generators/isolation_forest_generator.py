@@ -7,7 +7,8 @@ class IsolationForestAnomalyDetectorGenerator(BaseGenerator):
     def __init__(self, anomaly_detector):
         self.anomaly_detector = anomaly_detector
 
-    # TODO: y is probability, change it with threshold?
+    # TODO: check if generation code is generating correct C code
+    # TODO: probably needs refactor
     def generate(self, fname='isolation_forest_test.c'):
         n_estimators = self.anomaly_detector.clf.n_estimators
         n_features = self.anomaly_detector.clf.n_features_in_

@@ -1,0 +1,1 @@
+// TODO: extract some common code from generator here
