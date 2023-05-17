@@ -8,6 +8,8 @@ class IsolationForestAnomalyDetector:
 
     def fit(self, x):
         self.clf.fit(x)
+        tree_text = export_text(self.clf.estimators_[0])
+        print(tree_text)  
 
     def predict(self, x):
         # TODO: change to decision_function and add threshold
