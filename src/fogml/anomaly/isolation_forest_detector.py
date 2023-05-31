@@ -16,26 +16,33 @@ class IsolationForestAnomalyDetector:
         return self.clf.predict(x)
 
     
-    def treeToArray(self,tree, node_id=0, arr=[]):
+    def treeToArray(self, tree, parent_id = 0, node_id=0, arr=[0]*208):
         threshold = tree.threshold[node_id]
         feature = tree.feature[node_id]
         left_child = tree.children_left[node_id]
         right_child = tree.children_right[node_id]
         value = tree.value[node_id][0]
-        
-        arr.append({'id': node_id, 'threshold': threshold, 'feature': feature, 'value': value})
-        
-        if left_child != sklearn.tree._tree.TREE_LEAF:
-            self.treeToArray(tree, left_child, arr)
+
+        if node_id == 0:
+            arr[node_id] = {'id': node_id, 'threshold': threshold, 'feature': feature, 'value': value}
+        elif(node_id%2 == 1):
+            arr[2*parent_id + 1] = {'id': node_id, 'threshold': threshold, 'feature': feature, 'value': value}
         else:
-            arr.append({'id': left_child})
+            arr[2*parent_id + 2] = {'id': node_id, 'threshold': threshold, 'feature': feature, 'value': value}
+
+    
+        if left_child != sklearn.tree._tree.TREE_LEAF:
+            self.treeToArr(tree, node_id, left_child, arr)
+        else: 
+            arr[2*node_id + 1] = ({'id': left_child})
         
         if right_child != sklearn.tree._tree.TREE_LEAF:
-            self.treeToArray(tree, right_child, arr)
-        else:
-            arr.append({'id': right_child})
-        
+            self.treeToArr(tree, node_id, right_child, arr)
+        else: 
+            arr[2*node_id + 2] = ({'id': left_child})
+
         return arr
+
 
     def forestToArray(self):
         forest = []
