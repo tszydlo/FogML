@@ -27,11 +27,13 @@ class IsolationForestAnomalyDetector:
         
         if left_child != sklearn.tree._tree.TREE_LEAF:
             self.treeToArray(tree, left_child, arr)
-        arr.append({'id': left_child})
+        else:
+            arr.append({'id': left_child})
         
         if right_child != sklearn.tree._tree.TREE_LEAF:
             self.treeToArray(tree, right_child, arr)
-        arr.append({'id': right_child})
+        else:
+            arr.append({'id': right_child})
         
         return arr
 
