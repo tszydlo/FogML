@@ -1,4 +1,5 @@
 from sklearn.ensemble import IsolationForest
+import sklearn
 
 
 class IsolationForestAnomalyDetector:
@@ -42,5 +43,5 @@ class IsolationForestAnomalyDetector:
         for i in range(len(estimators)):
             tree = self.treeToArray(estimators[i].tree_)
             forrest.append(tree)
-            
+
         return forest
