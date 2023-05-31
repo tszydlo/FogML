@@ -12,7 +12,6 @@ class IsolationForestAnomalyDetector:
         print(tree_text)  
 
     def predict(self, x):
-        # TODO: change to decision_function and add threshold
         return self.clf.predict(x)
 
     
@@ -39,7 +38,9 @@ class IsolationForestAnomalyDetector:
 
     def forestToArray(self):
         forest = []
-        estimators = elf.clf.estimators_
+        estimators = self.clf.estimators_
         for i in range(len(estimators)):
-            tree = treeToArray(estimators[i].tree)
+            tree = self.treeToArray(estimators[i].tree_)
             forrest.append(tree)
+            
+        return forest
