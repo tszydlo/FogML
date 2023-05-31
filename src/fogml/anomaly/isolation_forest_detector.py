@@ -28,11 +28,11 @@ class IsolationForestAnomalyDetector:
         arr.append({'id': node_id, 'threshold': threshold, 'feature': feature, 'value': value})
         
         if left_child != sklearn.tree._tree.TREE_LEAF:
-            treeToArr(tree, left_child, arr)
+            self.treeToArray(tree, left_child, arr)
         arr.append({'id': left_child})
         
         if right_child != sklearn.tree._tree.TREE_LEAF:
-            treeToArr(tree, right_child, arr)
+            self.treeToArray(tree, right_child, arr)
         arr.append({'id': right_child})
         
         return arr
