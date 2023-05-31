@@ -44,6 +44,20 @@ class IsolationForestAnomalyDetector:
         return arr
 
 
+    def remove_zeros(self, forest):
+        updated_forest = []
+        updated_tree = []
+
+        for tree in forest:
+            for node in tree: 
+                if node != 0:
+                    updated_tree.append(node)
+
+            updated_forest.append(updated_tree)
+            updated_tree = []
+
+        return updated_forest
+
     def forestToArray(self):
         forest = []
         estimators = self.clf.estimators_
@@ -51,4 +65,5 @@ class IsolationForestAnomalyDetector:
             tree = self.treeToArray(estimators[i].tree_)
             forest.append(tree)
 
-        return forest
+        updated_forest = self.remove_zeros(forest)
+        return updated_forest
