@@ -16,9 +16,7 @@ class IsolationForestAnomalyDetector:
         return self.clf.predict(x)
 
     
-    def treeToArray(self,tree, node_id=0):
-        arr = []
-
+    def treeToArray(self,tree, node_id=0, arr=[]):
         threshold = tree.threshold[node_id]
         feature = tree.feature[node_id]
         left_child = tree.children_left[node_id]
