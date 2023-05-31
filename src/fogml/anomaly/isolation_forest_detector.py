@@ -14,3 +14,32 @@ class IsolationForestAnomalyDetector:
     def predict(self, x):
         # TODO: change to decision_function and add threshold
         return self.clf.predict(x)
+
+    
+    def treeToArray(self,tree, node_id=0):
+        arr = []
+
+        threshold = tree.threshold[node_id]
+        feature = tree.feature[node_id]
+        left_child = tree.children_left[node_id]
+        right_child = tree.children_right[node_id]
+        value = tree.value[node_id][0]
+        
+        arr.append({'id': node_id, 'threshold': threshold, 'feature': feature, 'value': value})
+        
+        if left_child != sklearn.tree._tree.TREE_LEAF:
+            treeToArr(tree, left_child, arr)
+        arr.append({'id': left_child})
+        
+        if right_child != sklearn.tree._tree.TREE_LEAF:
+            treeToArr(tree, right_child, arr)
+        arr.append({'id': right_child})
+        
+        return arr
+
+    def forestToArray(self):
+        forest = []
+        estimators = elf.clf.estimators_
+        for i in range(len(estimators)):
+            tree = treeToArray(estimators[i].tree)
+            forrest.append(tree)
