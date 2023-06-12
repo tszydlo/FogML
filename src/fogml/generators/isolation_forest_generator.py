@@ -16,6 +16,14 @@ class IsolationForestAnomalyDetectorGenerator(BaseGenerator):
         trees = self.anomaly_detector.clf.estimators_
         max_depth = max(estimator.tree_.max_depth for estimator in trees)
 
+        total_nodes = 0
+        trees_indexes = [0]
+        for tree in trees:
+            tree = tree.tree_
+            node_count = tree.node_count
+            total_nodes += node_count
+            trees_indexes.append(total_nodes)
+
         # Build C code
         code = "#include <math.h>\n"
         code += "#include <stdio.h>\n"
@@ -33,94 +41,33 @@ class IsolationForestAnomalyDetectorGenerator(BaseGenerator):
         code += "    float leaf_value;\n"
         code += "} decision_node;\n\n"
 
-        code += "const decision_node trees[{}][{}] = {{\n".format(n_estimators, 2 ** (max_depth + 1) - 1)
-        print("Ile mamy drzew?", len(trees))
+        code += f"const decision_node trees_nodes[{total_nodes}] = {{\n"
         for i, tree in enumerate(trees):
-            # print(tree.tree_.children_left[0], tree.tree_.children_right[0])
-            # print(tree.tree_.threshold[44])
             code += "    // Tree {}\n".format(i)
-            code += "    {\n"
+            # code += "    {\n"
             stack = [(0, 0)]
-            i = 0
+            j = 0
             print(len(tree.tree_.feature))
             while len(stack) > 0:
                 node_id, depth = stack.pop()
-                # print(node_id)
                 if depth > max_depth or tree.tree_.children_left[node_id] == tree.tree_.children_right[node_id]:
-                    code += "    {{-1, 0.0, -1, -1, {} }},\n".format(tree.tree_.value[node_id][0][0])
+                    code += "    {{-1, 0.0, -1, -1, {} }}, // Tree {} node {} \n".format(tree.tree_.value[node_id][0][0],i,node_id)
                 else:
-                    code += "    {{ {}, {}, {}, {}, 0.0 }},\n".format(
+                    code += "    {{ {}, {}, {}, {}, 0.0 }}, // Tree {} node {} \n".format(
                         tree.tree_.feature[node_id],
                         tree.tree_.threshold[node_id],
                         tree.tree_.children_left[node_id],
                         tree.tree_.children_right[node_id],
+                        i,node_id
                     )
                     stack.append((tree.tree_.children_right[node_id], depth + 1))
-
                     stack.append((tree.tree_.children_left[node_id], depth + 1))
-                i+=1
-            code += "    },\n"
+                j += 1
+            # code += "    },\n"
         code += "};\n\n"
 
-        # code += "float predict(float x[{}]) {{\n".format(n_features)
-        # code += "    float y = 0.0;\n"
-        # code += "    for (int i = 0; i < n_estimators; i++) {\n"
-        # code += "        int node = 0;\n"
-        # code += "        int depth = 0;\n"
-        # code += "        while (true) {\n"
-        # code += "            decision_node decision = trees[i][node];\n"
-        # code += "            if (decision.feature_index == -1) {\n"
-        # code += "                y += decision.leaf_value;\n"
-        # code += "                break;\n"
-        # code += "            }\n"
-        # code += "            float value = x[decision.feature_index];\n"
-        # code += "            if (value <= decision.threshold) {\n"
-        # code += "                node = decision.left_child;\n"
-        # code += "            } else {\n"
-        # code += "                node = decision.right_child;\n"
-        # code += "            }\n"
-        # code += "            depth += 1;\n"
-        # code += "        }\n"
-        # code += "    }\n"
-        # code += "    float avg_depth = y / n_estimators;\n"
-        # code += "    float n = {};\n".format(n_samples)
-        # code += "    float c = 2.0 * (log((float) n_features) + 0.5772156649) - 2.0 * (float) n_features / (float) n;\n"
-        # code += "    float AS = pow(2, -avg_depth / c);\n"
-        # code += "    return AS;\n"
-        # code += "}\n"
-
-
-        # code += "float predict(float x[{}]) {{\n".format(n_features)
-        # code += "    float height_sum = 0.0;\n"
-        # code += "    float y = 0.0;\n"
-        # code += "    for (int i = 0; i < n_estimators; i++) {\n"
-        # code += "        int node = 0;\n"
-        # code += "        int depth = 0;\n"
-        # code += "        while (true) {\n"
-        # code += "            if (depth >= max_depth) {\n"
-        # code += "                break;\n"
-        # code += "            }\n"
-        # code += "            decision_node decision = trees[i][node];\n"
-        # code += "            if (decision.feature_index == -1) {\n"
-        # code += "                height_sum += depth;\n"
-        # code += "                break;\n"
-        # code += "            }\n"
-        # code += "            float value = x[decision.feature_index];\n"
-        # code += "            if (value <= decision.threshold) {\n"
-        # code += "                node = decision.left_child;\n"
-        # code += "            } else {\n"
-        # code += "                node = decision.right_child;\n"
-        # code += "            }\n"
-        # code += "            depth += 1;\n"
-        # code += "        }\n"
-        # code += "    }\n"
-        # code += "    float n = 80.0;\n"
-        # code += "    float avg_depth = y / n_estimators;\n"
-        # code += "    float average_height = height_sum / (n_estimators * 1.0);\n"
-        # code += "    float c = 2.0 * (log((float) n_features) + 0.5772156649) - 2.0 * (float) n_features / (float) n;\n"
-        # code += "    float AS = pow(2, -avg_depth / c);\n"
-        # code += "    return AS;\n"
-        # code += "}\n"
+        formatted_indexes = str(trees_indexes).replace("[", "{").replace("]", "}")
+        code += f"const int trees[n_estimators] = {formatted_indexes};\n\n"
 
         code += "float predict(float x[{}]) {{\n".format(n_features)
         code += "    float y = 0.0;\n"
@@ -131,9 +78,9 @@ class IsolationForestAnomalyDetectorGenerator(BaseGenerator):
         code += "            if (depth >= max_depth) {\n"
         code += "                break;\n"
         code += "            }\n"
-        code += "            decision_node decision = trees[i][node];\n"
+        code += "            decision_node decision = trees_nodes[i + node];\n"
         code += "            if (decision.feature_index == -1) {\n"
-        code += "                y += decision.leaf_value;\n"
+        code += "                y += depth;\n"
         code += "                break;\n"
         code += "            }\n"
         code += "            float value = x[decision.feature_index];\n"
@@ -145,7 +92,11 @@ class IsolationForestAnomalyDetectorGenerator(BaseGenerator):
         code += "            depth += 1;\n"
         code += "        }\n"
         code += "    }\n"
-        code += "    return y / n_estimators;\n"
+        code += "    float n = 80.0;\n"
+        code += "    float avg_depth = y / n_estimators;\n"
+        code += "    float c = 2.0 * (log((float) n_features) + 0.5772156649) - 2.0 * (float) n_features / (float) n;\n"
+        code += "    float AS = pow(2, -avg_depth / c);\n"
+        code += "    return AS;\n"
         code += "}\n"
 
         # Write C code to file

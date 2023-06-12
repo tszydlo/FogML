@@ -31,28 +31,28 @@ def fogml_prepare_data(data):
 
 print(y)
 
-scaler = MinMaxScaler()
-transformer = scaler.fit(spX)
-data_norm = transformer.transform(spX)
+# scaler = MinMaxScaler()
+# transformer = scaler.fit(spX)
+# data_norm = transformer.transform(spX)
 
-data_test_norm = transformer.transform(spX_test)
+# data_test_norm = transformer.transform(spX_test)
 
-print("Scaler:")
-print(scaler.data_min_)
-print(scaler.data_max_)
+# print("Scaler:")
+# print(scaler.data_min_)
+# print(scaler.data_max_)
 
 ##################################################################
 anomalyDetector = IsolationForestAnomalyDetector(n_estimators=100, max_samples='auto', random_state=42)
-anomalyDetector.fit(data_norm)
+anomalyDetector.fit(spX)
 ##################################################################
 
 # TODO: the results of predict are not correct? maybe use threshold?
-res = anomalyDetector.predict(data_test_norm)
+res = anomalyDetector.predict(spX_test)
 print(res)
 
 factory = GeneratorFactory()
-generator = factory.get_generator(transformer)
-generator.generate()
+# generator = factory.get_generator(transformer)
+# generator.generate()
 
 generator = factory.get_generator(anomalyDetector)
 generator.generate()
