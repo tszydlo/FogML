@@ -1,1 +1,51 @@
-// TODO: extract some common code from generator here
+#include <math.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include "isolation_forest_test.h"
+
+const int n_estimators = <n_estimators>;
+const int n_features = <n_features>;
+const int max_depth = <max_depth>;
+
+typedef struct {
+    int feature_index;
+    float threshold;
+    int left_child;
+    int right_child;
+    float leaf_value;
+} decision_node;
+
+const decision_node trees_nodes[<total_nodes>] = <trees_nodes>
+
+
+const int trees[<n_estimators>] = <trees>;
+
+float predict(float x[<n_features>]) {
+    float y = 0.0;
+    for (int i = 0; i < n_estimators; i++) {
+        int node = 0;
+        int depth = 0;
+        while (true) {
+            if (depth >= max_depth) {
+                break;
+            }
+            decision_node decision = trees_nodes[i + node];
+            if (decision.feature_index == -1) {
+                y += depth;
+                break;
+            }
+            float value = x[decision.feature_index];
+            if (value <= decision.threshold) {
+                node = decision.left_child;
+            } else {
+                node = decision.right_child;
+            }
+            depth += 1;
+        }
+    }
+    float n = 80.0;
+    float avg_depth = y / n_estimators;
+    float c = 2.0 * (log((float) n_features) + 0.5772156649) - 2.0 * (float) n_features / (float) n;
+    float AS = pow(2, -avg_depth / c);
+    return AS;
+}
