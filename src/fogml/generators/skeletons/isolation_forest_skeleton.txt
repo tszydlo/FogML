@@ -18,7 +18,7 @@ typedef struct {
 const decision_node trees_nodes[<total_nodes>] = <trees_nodes>
 
 
-const int trees[<n_estimators>] = <trees>;
+const int trees[n_estimators+1] = <trees>;
 
 float predict(float x[<n_features>]) {
     float y = 0.0;
@@ -29,7 +29,7 @@ float predict(float x[<n_features>]) {
             if (depth >= max_depth) {
                 break;
             }
-            decision_node decision = trees_nodes[i + node];
+            decision_node decision = trees_nodes[trees[i] + node];
             if (decision.feature_index == -1) {
                 y += depth;
                 break;

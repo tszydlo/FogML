@@ -12,21 +12,18 @@ class IsolationForestAnomalyDetectorGenerator(BaseGenerator):
     def generate_trees_nodes(trees, max_depth):
         code = "{\n"
         for i, tree in enumerate(trees):
-            code += "    // Tree {}\n".format(i)
             stack = [(0, 0)]
             j = 0
-            print(len(tree.tree_.feature))
             while len(stack) > 0:
                 node_id, depth = stack.pop()
                 if depth > max_depth or tree.tree_.children_left[node_id] == tree.tree_.children_right[node_id]:
-                    code += "    {{-1, 0.0, -1, -1, {} }}, // Tree {} node {} \n".format(tree.tree_.value[node_id][0][0],i,node_id)
+                    code += "    {{-1, 0.0, -1, -1, {} }},\n".format(tree.tree_.value[node_id][0][0])
                 else:
-                    code += "    {{ {}, {}, {}, {}, 0.0 }}, // Tree {} node {} \n".format(
+                    code += "    {{ {}, {}, {}, {}, 0.0 }},\n".format(
                         tree.tree_.feature[node_id],
                         tree.tree_.threshold[node_id],
                         tree.tree_.children_left[node_id],
                         tree.tree_.children_right[node_id],
-                        i, node_id
                     )
                     stack.append((tree.tree_.children_right[node_id], depth + 1))
                     stack.append((tree.tree_.children_left[node_id], depth + 1))
