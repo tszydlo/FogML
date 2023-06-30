@@ -95,8 +95,6 @@ _Tomasz Szydlo, Prem Prakash Jayaraman, Yinhao Li, Graham Morgan, Rajiv Ranjan, 
 
 _Tomasz Szydlo, Joanna Sendorek, Robert Brzoza-Woch, Enabling machine learning on resource constrained devices by source code generation of the learned models, ICCS 2018: 682-694_
 
-_The research was supported by the National Centre for Research and Development (NCBiR) under Grant No. LIDER/15/0144 /L-7/15/NCBR/2016._
-
 
 ## Press
 https://blog.arduino.cc/2022/07/22/industrial-iot-anomaly-detection-on-microcontrollers/
