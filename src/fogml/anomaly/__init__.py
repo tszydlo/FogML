@@ -1,1 +1,2 @@
-from .detectors import KMeansAnomalyDetector
+from .kmeans_detector import KMeansAnomalyDetector
+from .isolation_forest_detector import IsolationForestAnomalyDetector
