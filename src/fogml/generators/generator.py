@@ -18,6 +18,7 @@ import sklearn.ensemble
 
 from sklearn import *
 from sklearn.neural_network import *
+import sklearn.neighbors
 
 import fogml.rl
 import fogml.anomaly
@@ -29,6 +30,7 @@ from .qstatesintervals_code_generator import QStatesIntervalsCodeGenerator
 from .random_forest_generator import RandomForestCodeGenerator
 from .scaler_generator import MinMaxScalerGenerator
 from .tree_code_generator import TreeCodeGenerator
+from .knn_generator import KNClassifierGenerator
 
 
 class GeneratorFactory:
@@ -39,6 +41,7 @@ class GeneratorFactory:
         sklearn.neural_network.MLPClassifier: MlpCodeGenerator,
         sklearn.ensemble.RandomForestClassifier: RandomForestCodeGenerator,
         sklearn.preprocessing.MinMaxScaler: MinMaxScalerGenerator,
+        sklearn.neighbors.KNeighborsClassifier: KNClassifierGenerator,
         fogml.rl.QLearning: QLearningCodeGenerator,
         fogml.rl.QStatesIntervals: QStatesIntervalsCodeGenerator,
         fogml.anomaly.KMeansAnomalyDetector: KMeansAnomalyDetectorGenerator

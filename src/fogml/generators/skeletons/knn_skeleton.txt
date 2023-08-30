@@ -1,0 +1,23 @@
+#include "../fogml_sdk/knn_classifier/knn_classifier.h"
+#define N_FEATURES <n_features>
+#define N_NEIGHBORS <n_neighbors>
+#define N_SAMPLES <n_samples>
+
+float samples[N_SAMPLES * N_FEATURES] = <sample_features>;
+int classes[N_SAMPLES] = <sample_classes>;
+
+// buffers
+float distance_buffer[N_NEIGHBORS];
+int classes_buffer[N_NEIGHBORS];
+int class_count_buffer[N_NEIGHBORS];
+
+fogml_knn_classifier_config_t knn_config = {
+    .n_neighbors = N_NEIGHBORS,
+    .n_features = N_FEATURES,
+    .data_features = samples,
+    .data_classes = classes,
+    .n_data_points = N_SAMPLES,
+    .nearest_classes_buffer = classes_buffer,
+    .nearest_distances_buffer = distance_buffer,
+    .nn_class_counts_buffer = class_count_buffer
+};
