@@ -5,7 +5,7 @@ Due to the development of IoT solutions, we can observe the constantly growing n
 
 The FogML is a set of tools enabling TinyML on microcontrollers as low resource-limited as ARM M0 cores. In contrast to many other frameworks, the FogML utilises classic machine learning methods such as density-based anomaly detection and classifiers based on Bayesian networks, decision forests and vanilla MLP. In addition, it supports off-device learning for the classification problem and on-device learning for anomaly detection. The active learning anomaly detection is based on reservoir sampling and outlier detection algorithms which are trained directly on the device. The dedicated library performs the time series processing on the devices, computing the feature vector consisting of RMS, FFT, amplitude and other low-level signal metrics. One of the techniques used in FogML is source code generation of the inferencing functions for embedded devices. It leads to a much smaller memory footprint than for more computationally advanced solutions such as deep neural networks.
 
-.. image:: docs/algorithms.png
+.. figure:: ./algorithms.png
   :width: 800
 
 The structure of the project is as follows:
