@@ -1,3 +1,5 @@
 .idea
 dist
 *.egg-info/
+docs/_build
+docs/generated
