@@ -14,6 +14,7 @@ Examples of anomaly detection and classification algorithms provided by the FogM
 * `FogML-SDK` [https://github.com/tszydlo/fogml_sdk]
 * `FogML Arduino` [https://github.com/tszydlo/FogML-Arduino]
 * `FogML Zephyr OS` [https://github.com/tszydlo/FogML-Zephyr]
+* `FogML ISPU` [https://github.com/tszydlo/FogML-ISPU]
 
 Example of connectivity and device management provided by LwM2M protocol:
 * `FogML-Zephyr-LwM2M` [https://github.com/tszydlo/FogML-Zephyr-LwM2M]
