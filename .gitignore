@@ -1,5 +1,6 @@
 .idea
 dist
+fixes
 *.egg-info/
 docs/_build
 docs/generated

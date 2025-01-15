@@ -68,9 +68,9 @@ class MlpCodeGenerator(BaseGenerator):
 
     @staticmethod
     def generate_softmax_activation_on_vector(size=10, vector_name="v"):
-        return "double max_el = %s[0];" \
+        return "float max_el = %s[0];" \
                "for (int i=1; i < %d; i++){max_el = max(max_el, %s[i]);}" \
-               "double exp_sum = 0.0; \n" \
+               "float exp_sum = 0.0; \n" \
                "for (int i=0; i<%d; i++){ exp_sum += exp(%s[i]-max_el); } \n" \
                "for (int i=0; i<%d; i++){ %s[i] = exp(%s[i]-max_el) / exp_sum; }\n" \
                % (vector_name, size, vector_name, size, vector_name, size, vector_name, vector_name)
@@ -133,8 +133,14 @@ class MlpCodeGenerator(BaseGenerator):
                 code += ArduinoGenerator.get_progmem_array(self.clf.coefs_[layer][:, [col]],
                                                            name="pmdata_%d%d" % (layer, col))
 
-        vector_names = ["x", "result0"]
+        # vector_names = ["x", "result0"]
+
         hidden_layers = len(self.clf.hidden_layer_sizes)
+
+        vector_names = ["x"]
+        for layer in range(hidden_layers):
+            vector_names.append("result%d" % layer)
+
         function_body = ""
         for layer in range(hidden_layers):
             function_body += self.generate_layer_transformation(layer, vector_name=vector_names[layer], decomposed=True)
@@ -145,7 +151,7 @@ class MlpCodeGenerator(BaseGenerator):
         function_body += self.generate_softmax_activation_on_vector(
             size=self.clf.coefs_[hidden_layers].shape[1], vector_name="result%d" % hidden_layers)
 
-        function_body += self.generate_max_index_return(len(self.clf.classes_), vector_name="result1")
+        function_body += self.generate_max_index_return(len(self.clf.classes_), vector_name="result%d" % hidden_layers)
         code += generate_c_function(function_body=function_body, return_type="int",
                                     name=cname, args="uint8_t * x")
         return code
