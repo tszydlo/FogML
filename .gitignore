@@ -4,3 +4,5 @@ fixes
 *.egg-info/
 docs/_build
 docs/generated
+examples/sat/dataset/dataset.csv
+examples/sat/dataset/CADC*.csv

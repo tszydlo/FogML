@@ -51,6 +51,7 @@ Papers
    Home <self>
    usage
    generators
+   on_device_learning
    sdk
    pipelines
    examples

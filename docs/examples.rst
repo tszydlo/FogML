@@ -51,12 +51,6 @@ applications for Zephyr. The application can also be built directly using the we
 The application uses the basic drivers available in the operating system, and porting to another device should be
 relatively easy.
 
-
-Arduino
--------
-
-
-
-
 Complex examples
 ----------------
+
