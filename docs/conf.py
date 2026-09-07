@@ -3,7 +3,7 @@
 # -- Project information
 
 project = 'FogML'
-copyright = '2024, Tomasz Szydlo'
+copyright = '2026, Tomasz Szydlo'
 author = 'Tomasz Szydlo'
 
 release = '0.1'

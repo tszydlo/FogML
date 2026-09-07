@@ -54,3 +54,11 @@ relatively easy.
 Complex examples
 ----------------
 
+**Satellite telemetry**
+
+This example implements an online, semi-supervised anomaly detector for the `OPS-SAT-AD` [https://github.com/kplabs-pl/OPS-SAT-AD] satellite telemetry benchmark, using reservoir sampling and Local Outlier Factor (LOF) from the FogML SDK's ``anomaly_rt`` module. A model is built incrementally from the non-anomalous rows of a telemetry channel's training split, then used to score the remaining rows, classifying a row as anomalous when its LOF score exceeds a threshold. See the paper [https://arxiv.org/abs/2206.14265] for the underlying algorithm.
+
+The C version, `FogML-C` [https://github.com/tszydlo/FogML-C], is a plain, host-buildable example (``Makefile`` + ``gcc``, no board framework) that links directly against the vendored ``fogml_sdk`` C library. Its pipeline configuration - reservoir size, LOF ``k``, feature-vector size - lives in ``src/fogml_config.h``, and ``src/main.c`` drives it over a per-channel CSV, printing per-row scores and a final accuracy summary.
+
+The Python port lives in this repository's ``examples/sat``. It mirrors the same structure and CSV-driven CLI, using ``fogml_sdk``'s Python replica of ``anomaly_rt`` (reservoir sampling, and LOF backed by scikit-learn) in place of the compiled C SDK, with the pipeline configuration in ``fogml_config.py`` and the driver in ``main.py`` - no C toolchain required.
+

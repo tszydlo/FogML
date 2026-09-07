@@ -27,6 +27,11 @@ class TinymlReservoirSamplingConfig:
     def __post_init__(self) -> None:
         self.reservoir = np.zeros((self.n, self.vector_size), dtype=np.float32)
 
+    def reset(self) -> None:
+        """Empty the reservoir: zero the collected-point count and clear the buffer."""
+        self.k = 0
+        self.reservoir[:] = 0
+
 
 class TinymlReservoirSampling:
     """Replica of fogml_sdk's tinyml_reservoir_sampling(), namespaced as a static method."""

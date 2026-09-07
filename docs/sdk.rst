@@ -3,6 +3,8 @@ SDK for devices
 
 SDK implements FogML [https://github.com/tszydlo/FogML] machine learning algorithms for resource-constrained devices.
 
+The SDK is implemented in C for resource-constrained devices. A partially implemented Python version, ``fogml_sdk``, is also available in this repository (``src/fogml_sdk``) - it currently implements the ``anomaly_rt`` module (reservoir sampling and Local Outlier Factor, the latter backed by scikit-learn), allowing FogML pipelines to be exercised and tested on the host without a C toolchain.
+
 Available modules and algorithms:
 
 * anomaly_rt
