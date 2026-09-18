@@ -19,16 +19,16 @@ import sklearn.ensemble
 from sklearn import *
 from sklearn.neural_network import *
 
-import fogml.rl
-import fogml.anomaly
-from .anomaly_detector_generator import KMeansAnomalyDetectorGenerator
+from .kmeans_anomaly_detector_generator import KMeansAnomalyDetectorGenerator
 from .bayes_code_generator import BayesCodeGenerator
+from .isolation_forest_generator import IsolationForestAnomalyDetectorGenerator
 from .mlp_code_generator import MlpCodeGenerator
 from .qlearning_code_generator import QLearningCodeGenerator
 from .qstatesintervals_code_generator import QStatesIntervalsCodeGenerator
 from .random_forest_generator import RandomForestCodeGenerator
 from .scaler_generator import MinMaxScalerGenerator
 from .tree_code_generator import TreeCodeGenerator
+from .. import rl, anomaly
 
 
 class GeneratorFactory:
@@ -39,9 +39,10 @@ class GeneratorFactory:
         sklearn.neural_network.MLPClassifier: MlpCodeGenerator,
         sklearn.ensemble.RandomForestClassifier: RandomForestCodeGenerator,
         sklearn.preprocessing.MinMaxScaler: MinMaxScalerGenerator,
-        fogml.rl.QLearning: QLearningCodeGenerator,
-        fogml.rl.QStatesIntervals: QStatesIntervalsCodeGenerator,
-        fogml.anomaly.KMeansAnomalyDetector: KMeansAnomalyDetectorGenerator
+        rl.QLearning: QLearningCodeGenerator,
+        rl.QStatesIntervals: QStatesIntervalsCodeGenerator,
+        anomaly.KMeansAnomalyDetector: KMeansAnomalyDetectorGenerator,
+        anomaly.IsolationForestAnomalyDetector: IsolationForestAnomalyDetectorGenerator
     }
 
     def get_generator(self, clf):
